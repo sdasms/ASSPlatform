@@ -78,6 +78,7 @@ namespace BasicData
                     CurrentFix = null;
             }
         }
+
         /// <summary>
         /// 当前维修事件，状态为正常则为null
         /// </summary>
