@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AssDB" Class="FaultDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=172.17.10.147;Initial Catalog=AssDB;Integrated Security=True" SettingsObjectName="FaultReportServer.Properties.Settings" SettingsPropertyName="AssDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.StaffDuty" Member="StaffDuty">
+    <Type Name="StaffDuty">
+      <Column Name="StaffID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="DutyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="InstrumentID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Duty_StaffDuty" Member="Duty" ThisKey="DutyID" OtherKey="ID" Type="Duty" IsForeignKey="true" />
+      <Association Name="Staff_StaffDuty" Member="Staff" ThisKey="StaffID" OtherKey="ID" Type="Staff" IsForeignKey="true" />
+      <Association Name="Instrument_StaffDuty" Member="Instrument" ThisKey="InstrumentID" OtherKey="GUID" Type="Instrument" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliveryStatus" Member="DeliveryStatus">
+    <Type Name="DeliveryStatus">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="DeliveryStatus_Instrument" Member="Instrument" ThisKey="ID" OtherKey="DeliveryStatusID" Type="Instrument" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Department" Member="Department">
+    <Type Name="Department">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Department_Staff" Member="Staff" ThisKey="ID" OtherKey="DepartmentID" Type="Staff" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DispatchDelay" Member="DispatchDelay">
+    <Type Name="DispatchDelay">
+      <Column Name="[Level]" Member="Level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ResponsibleStaffID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="DecisionTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Deadline" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Reason" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FixEventID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Staff_DispatchDelay" Member="Staff" ThisKey="ResponsibleStaffID" OtherKey="ID" Type="Staff" IsForeignKey="true" />
+      <Association Name="FixEvent_DispatchDelay" Member="FixEvent" ThisKey="FixEventID" OtherKey="ID" Type="FixEvent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DispatchMission" Member="DispatchMission">
+    <Type Name="DispatchMission">
+      <Column Name="DispatchedStaffID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="DispatchTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Mission" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="FixEventID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="FixEvent_DispatchMission" Member="FixEvent" ThisKey="FixEventID" OtherKey="ID" Type="FixEvent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Duty" Member="Duty">
+    <Type Name="Duty">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Describe" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="Duty_StaffDuty" Member="StaffDuty" ThisKey="ID" OtherKey="DutyID" Type="StaffDuty" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FinishDelay" Member="FinishDelay">
+    <Type Name="FinishDelay">
+      <Column Name="[Level]" Member="Level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ResponsibleStaffID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="DecisionTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Deadline" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Reason" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FixEventID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Staff_FinishDelay" Member="Staff" ThisKey="ResponsibleStaffID" OtherKey="ID" Type="Staff" IsForeignKey="true" />
+      <Association Name="FixEvent_FinishDelay" Member="FixEvent" ThisKey="FixEventID" OtherKey="ID" Type="FixEvent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FixStatus" Member="FixStatus">
+    <Type Name="FixStatus">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="FixStatus_InstrumentStatusHistory" Member="InstrumentStatusHistory" ThisKey="ID" OtherKey="StatusID" Type="InstrumentStatusHistory" />
+      <Association Name="FixStatus_FixEvent" Member="FixEvent" ThisKey="ID" OtherKey="CurrentStatusID" Type="FixEvent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InstrumentStatusHistory" Member="InstrumentStatusHistory">
+    <Type Name="InstrumentStatusHistory">
+      <Column Name="FixEventID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StatusChangeTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="FixStatus_InstrumentStatusHistory" Member="FixStatus" ThisKey="StatusID" OtherKey="ID" Type="FixStatus" IsForeignKey="true" />
+      <Association Name="FixEvent_InstrumentStatusHistory" Member="FixEvent" ThisKey="FixEventID" OtherKey="ID" Type="FixEvent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InstrumentType" Member="InstrumentType">
+    <Type Name="InstrumentType">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="InstrumentType_FixEvent" Member="FixEvent" ThisKey="ID" OtherKey="InstrumentType" Type="FixEvent" />
+      <Association Name="InstrumentType_Instrument" Member="Instrument" ThisKey="ID" OtherKey="Type" Type="Instrument" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Staff" Member="Staff">
+    <Type Name="Staff">
+      <Column Name="ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="DepartmentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Association Name="Staff_StaffDuty" Member="StaffDuty" ThisKey="ID" OtherKey="StaffID" Type="StaffDuty" />
+      <Association Name="Staff_DispatchDelay" Member="DispatchDelay" ThisKey="ID" OtherKey="ResponsibleStaffID" Type="DispatchDelay" />
+      <Association Name="Staff_FinishDelay" Member="FinishDelay" ThisKey="ID" OtherKey="ResponsibleStaffID" Type="FinishDelay" />
+      <Association Name="Staff_FixEvent" Member="FixEvent" ThisKey="ID" OtherKey="Auditor" Type="FixEvent" />
+      <Association Name="Staff_Project" Member="Project" ThisKey="ID" OtherKey="ProjectManagerID" Type="Project" />
+      <Association Name="Staff_Project1" Member="Project1" ThisKey="ID" OtherKey="SalesManagerID" Type="Project" />
+      <Association Name="Department_Staff" Member="Department" ThisKey="DepartmentID" OtherKey="ID" Type="Department" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FixEvent" Member="FixEvent">
+    <Type Name="FixEvent">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FaultTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FixPlan" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DispatchDeadline" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FinishDeadline" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="InstrumentID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RecentStatusTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="AccomplishTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Auditted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Auditor" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="InstrumentType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FaultDetail" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="FaultType" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentStatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FixEvent_DispatchDelay" Member="DispatchDelay" ThisKey="ID" OtherKey="FixEventID" Type="DispatchDelay" />
+      <Association Name="FixEvent_DispatchMission" Member="DispatchMission" ThisKey="ID" OtherKey="FixEventID" Type="DispatchMission" />
+      <Association Name="FixEvent_FinishDelay" Member="FinishDelay" ThisKey="ID" OtherKey="FixEventID" Type="FinishDelay" />
+      <Association Name="FixEvent_InstrumentStatusHistory" Member="InstrumentStatusHistory" ThisKey="ID" OtherKey="FixEventID" Type="InstrumentStatusHistory" />
+      <Association Name="FixEvent_EventAttachedFile" Member="EventAttachedFile" ThisKey="ID" OtherKey="FixEventID" Type="EventAttachedFile" />
+      <Association Name="FixStatus_FixEvent" Member="FixStatus" ThisKey="CurrentStatusID" OtherKey="ID" Type="FixStatus" IsForeignKey="true" />
+      <Association Name="InstrumentType_FixEvent" Member="InstrumentType1" ThisKey="InstrumentType" OtherKey="ID" Type="InstrumentType" IsForeignKey="true" />
+      <Association Name="Staff_FixEvent" Member="Staff" ThisKey="Auditor" OtherKey="ID" Type="Staff" IsForeignKey="true" />
+      <Association Name="FaultType_FixEvent" Member="FaultType1" ThisKey="FaultType" OtherKey="FaultCode" Type="FaultType" IsForeignKey="true" />
+      <Association Name="Instrument_FixEvent" Member="Instrument" ThisKey="InstrumentID" OtherKey="GUID" Type="Instrument" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CustomerReportFault" Member="CustomerReportFault">
+    <Type Name="CustomerReportFault">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ReportTime" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="MappedFaultType" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ProjectName" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="FaultType_CustomerReportFault" Member="FaultType" ThisKey="MappedFaultType" OtherKey="FaultCode" Type="FaultType" IsForeignKey="true" />
+      <Association Name="Project_CustomerReportFault" Member="Project" ThisKey="ProjectID" OtherKey="ID" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FaultType" Member="FaultType">
+    <Type Name="FaultType">
+      <Column Name="InstrumentTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Summary" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Detail" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="FaultCode" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="FaultType_FixEvent" Member="FixEvent" ThisKey="FaultCode" OtherKey="FaultType" Type="FixEvent" />
+      <Association Name="FaultType_CustomerReportFault" Member="CustomerReportFault" ThisKey="FaultCode" OtherKey="MappedFaultType" Type="CustomerReportFault" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Instrument" Member="Instrument">
+    <Type Name="Instrument">
+      <Column Name="GUID" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProjectID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ProducedTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsOnline" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DeliveryStatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentFaultCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastUpdateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Instrument_StaffDuty" Member="StaffDuty" ThisKey="GUID" OtherKey="InstrumentID" Type="StaffDuty" />
+      <Association Name="Instrument_FixEvent" Member="FixEvent" ThisKey="GUID" OtherKey="InstrumentID" Type="FixEvent" />
+      <Association Name="DeliveryStatus_Instrument" Member="DeliveryStatus" ThisKey="DeliveryStatusID" OtherKey="ID" Type="DeliveryStatus" IsForeignKey="true" />
+      <Association Name="InstrumentType_Instrument" Member="InstrumentType" ThisKey="Type" OtherKey="ID" Type="InstrumentType" IsForeignKey="true" />
+      <Association Name="Project_Instrument" Member="Project" ThisKey="ProjectID" OtherKey="ID" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Project" Member="Project">
+    <Type Name="Project">
+      <Column Name="ID" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Client" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SalesManagerID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectManagerID" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DeliveryTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Project_CustomerReportFault" Member="CustomerReportFault" ThisKey="ID" OtherKey="ProjectID" Type="CustomerReportFault" />
+      <Association Name="Project_Instrument" Member="Instrument" ThisKey="ID" OtherKey="ProjectID" Type="Instrument" />
+      <Association Name="Project_TransitServer" Member="TransitServer" ThisKey="ID" OtherKey="ProjectID" Type="TransitServer" />
+      <Association Name="Staff_Project" Member="Staff" ThisKey="ProjectManagerID" OtherKey="ID" Type="Staff" IsForeignKey="true" />
+      <Association Name="Staff_Project1" Member="Staff1" ThisKey="SalesManagerID" OtherKey="ID" Type="Staff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TransitServer" Member="TransitServer">
+    <Type Name="TransitServer">
+      <Column Name="Username" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Customer" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ProjectID" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Project_TransitServer" Member="Project" ThisKey="ProjectID" OtherKey="ID" Type="Project" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EventAttachedFile" Member="EventAttachedFile">
+    <Type Name="EventAttachedFile">
+      <Column Name="FileID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FixEventID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UploadTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="FixEvent_EventAttachedFile" Member="FixEvent" ThisKey="FixEventID" OtherKey="ID" Type="FixEvent" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
